@@ -1,0 +1,6 @@
+[package]
+name = "rc4impl"
+version = "0.1.0"
+authors = ["uhyo <uhyo@uhy.ooo>"]
+
+[dependencies]

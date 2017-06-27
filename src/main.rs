@@ -1,21 +1,33 @@
 extern crate rand;
+extern crate getopts;
 extern crate rc4impl;
 
 use std::env;
 use std::io;
 use std::io::{Read, Write};
 
+use getopts::Options;
 use rand::thread_rng;
 
 use rc4impl::{rc4, to_hex, one_dist};
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    if args.len() < 2 {
-        distribution_mode();
-    }else{
-        let key = args[1].clone();
-        encrypt_mode(key);
+    // parse options
+    let mut options = Options::new();
+
+    // define options
+    options.optopt("k", "key", "Key of RC4 encryption", "");
+
+    let matches = options.parse(&args[1..]).unwrap();
+
+    match matches.opt_str("key") {
+        Some(key) => {
+            encrypt_mode(key);
+        }
+        None => {
+            distribution_mode();
+        }
     }
 }
 

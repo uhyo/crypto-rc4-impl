@@ -8,7 +8,7 @@ mod distribution;
 pub use generator::Generator;
 pub use rc4::rc4;
 pub use hex::to_hex;
-pub use distribution::one_dist;
+pub use distribution::*;
 
 #[cfg(test)]
 mod test{

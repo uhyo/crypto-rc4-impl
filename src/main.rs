@@ -5,6 +5,7 @@ extern crate rc4impl;
 use std::env;
 use std::io;
 use std::io::{Read, Write};
+use std::fs::File;
 
 use getopts::Options;
 use rand::thread_rng;
@@ -40,7 +41,7 @@ fn encrypt_mode(key: String) {
     println!("{}", hex);
 }
 
-const ITER_COUNT: i32 = 100000;
+const ITER_COUNT: i32 = 16777216;
 
 fn distribution_mode() {
     let mut stderr = io::stderr();
@@ -55,13 +56,26 @@ fn distribution_mode() {
         one_dist(&mut rng, &mut dist);
     }
 
+    // write each distribution to file
+    for i in 0..20 {
+        let filename = format!("./data/dist-{}.csv", i);
+        let mut file = File::create(filename).unwrap();
+        print_dist(&mut file, &dist[i]);
+    }
+
     // take the second byte
-    let ref second = dist[1];
-    print_dist(second);
+    // let ref second = dist[1];
+    // print_dist(second);
 }
 
-fn print_dist(dist: &[i32; 256]) {
+fn print_dist<T>(target: &mut T, dist: &[i32; 256])
+    where T: Write
+{
     for i in 0..256 {
-        println!("{}, {}", i, dist[i]);
+        writeln!(
+            target,
+            "{}, {}",
+            i,
+            dist[i]).unwrap();
     }
 }

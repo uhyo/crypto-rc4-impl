@@ -1,6 +1,6 @@
 use generator::Generator;
 
-pub fn rc4(key: &[u8], data: &[u8]) -> Vec<u8>{
+pub fn rc4<'a, T>(key: &[u8], data: T) -> Vec<u8> where T: Iterator<Item=u8>{
     // generate a cipher stream from key
     let gen = Generator::new(key);
     // xor of cipher stream and data stream

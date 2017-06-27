@@ -1,10 +1,14 @@
+extern crate rand;
+
 mod generator;
 mod rc4;
 mod hex;
+mod distribution;
 
 pub use generator::Generator;
 pub use rc4::rc4;
 pub use hex::to_hex;
+pub use distribution::one_dist;
 
 #[cfg(test)]
 mod test{

@@ -1,5 +1,4 @@
 use std::num::Wrapping;
-use std::ops::Range;
 
 pub struct Generator{
     table: [Wrapping<u8>; 256],
